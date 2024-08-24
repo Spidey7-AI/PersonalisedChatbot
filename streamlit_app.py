@@ -35,7 +35,6 @@ def chat_strat(chain):
             st.markdown(prompt)
         # Add user message to chat history
         with st.chat_message("assistant"):
-            st.write(prompt)
             response = chain.invoke({"question":  prompt})
             st.markdown(response)
         st.session_state.messages.append({"role": "user", "content": prompt})
