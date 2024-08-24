@@ -1,16 +1,24 @@
 import streamlit as st
 import time
 import os
-from langchain_huggingface import ChatHuggingFace
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.llms import HuggingFaceEndpoint
 from langchain_huggingface.llms import HuggingFacePipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import pipeline
 
-llm = HuggingFacePipeline.from_model_id(
-    model_id="gpt2",
+model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-Instruct-v0.1")
+text_generation_pipeline = pipeline(
+    model=model,
+    tokenizer=tokenizer,
     task="text-generation",
-    pipeline_kwargs={"max_new_tokens": 500},
+    temperature=0.2,
+    repetition_penalty=1.1,
+    return_full_text=True,
+    max_new_tokens=1000,
 )
+
+llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
 
 
 def response_generator(chain, prompt):
