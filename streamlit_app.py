@@ -20,7 +20,7 @@ tokenizer = AutoTokenizer.from_pretrained("gpt2")
 
 # llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
 
-pipe = pipeline("text-generation", model=model,temperature=0.0, tokenizer=tokenizer, max_new_tokens=500)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=500)
 llm = HuggingFacePipeline(pipeline=pipe)
 
 def response_generator(chain, prompt):
