@@ -6,7 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_huggingface.llms import HuggingFacePipeline
 
 llm = HuggingFacePipeline.from_model_id(
-    model_id="gpt2",
+    model_id="HuggingFaceH4/zephyr-7b-beta",
     task="text-generation",
     pipeline_kwargs={"max_new_tokens": 200},
 )
@@ -18,7 +18,7 @@ def response_generator(chain, prompt):
         yield word + ""
         time.sleep(0.05)
 
-def chat_strat(chain, remove_part):
+def chat_strat(chain):
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -36,7 +36,6 @@ def chat_strat(chain, remove_part):
         # Add user message to chat history
         with st.chat_message("assistant"):
             response = chain.invoke({"question":  prompt})
-            response = response.replace(remove_part, "")
             st.markdown(response)
 
             
@@ -66,8 +65,6 @@ elif selected_type == "Psychologist":
     """
     prompt = ChatPromptTemplate.from_template(template)
     chain_psychologist = prompt | llm
-    remove_from_text ="""
-    Human: You are a psychologist. Please provide insights on the following question: I want to kill myself ?. Include relevant psychological concepts, coping strategies, and any advice that may help individuals dealing with this issue.
-    """
-    chat_strat(chain_psychologist, remove_from_text)
+
+    chat_strat(chain_psychologist)
 
