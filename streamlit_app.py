@@ -6,20 +6,22 @@ from langchain_huggingface.llms import HuggingFacePipeline
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import pipeline
 
-model = AutoModelForCausalLM.from_pretrained("openai-community/gpt2")
-tokenizer = AutoTokenizer.from_pretrained("openai-community/gpt2")
-text_generation_pipeline = pipeline(
-    model=model,
-    tokenizer=tokenizer,
-    task="text-generation",
-    temperature=0.0,
-    repetition_penalty=1.1,
-    return_full_text=True,
-    max_new_tokens=1000,
-)
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
+# text_generation_pipeline = pipeline(
+#     model=model,
+#     tokenizer=tokenizer,
+#     task="text-generation",
+#     temperature=0.0,
+#     repetition_penalty=1.1,
+#     return_full_text=True,
+#     max_new_tokens=1000,
+# )
 
-llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
+# llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
 
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=10)
+llm = HuggingFacePipeline(pipeline=pipe)
 
 def response_generator(chain, prompt):
     for word in chain.stream({"question": prompt}):
