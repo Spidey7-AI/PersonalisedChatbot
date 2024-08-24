@@ -18,7 +18,7 @@ def response_generator(chain, prompt):
         yield word + ""
         time.sleep(0.05)
 
-def chat_strat(chain):
+def chat_strat(chain, remove_part):
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -36,6 +36,7 @@ def chat_strat(chain):
         # Add user message to chat history
         with st.chat_message("assistant"):
             response = chain.invoke({"question":  prompt})
+            response = response.replace(remove_part, "")
             st.markdown(response)
 
             
@@ -65,5 +66,8 @@ elif selected_type == "Psychologist":
     """
     prompt = ChatPromptTemplate.from_template(template)
     chain_psychologist = prompt | llm
-    chat_strat(chain_psychologist)
+    remove_from_text ="""
+    Human: You are a psychologist. Please provide insights on the following question: I want to kill myself ?. Include relevant psychological concepts, coping strategies, and any advice that may help individuals dealing with this issue.
+    """
+    chat_strat(chain_psychologist, remove_from_text)
 
