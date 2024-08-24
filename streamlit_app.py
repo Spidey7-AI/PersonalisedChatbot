@@ -9,7 +9,7 @@ from langchain_huggingface.llms import HuggingFacePipeline
 llm = HuggingFacePipeline.from_model_id(
     model_id="gpt2",
     task="text-generation",
-    pipeline_kwargs={"max_new_tokens": 200},
+    pipeline_kwargs={"max_new_tokens": 2000},
 )
 
 
