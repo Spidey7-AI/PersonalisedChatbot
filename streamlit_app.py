@@ -11,13 +11,7 @@ llm = HuggingFacePipeline.from_model_id(
     pipeline_kwargs={"max_new_tokens": 200},
 )
 
-# Load environment variables from the .env file
 
-# Set the environment variable
-os.environ["OPENAI_API_KEY"] = api_key
-
-# Initialize the OpenAI instance
-llm = OpenAI()
 
 def response_generator(chain, prompt):
     for word in chain.stream({"question": prompt}):
