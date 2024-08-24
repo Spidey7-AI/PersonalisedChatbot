@@ -1,12 +1,11 @@
 import streamlit as st
 import time
 import os 
-from dotenv import load_dotenv
 from langchain_openai import OpenAI
 from langchain_core.prompts import ChatPromptTemplate
 # Load environment variables from the .env file
-load_dotenv()
-openai_api_key = os.getenv("OPENAI_API_KEY")
+
+os.environ["OPENAI_API_KEY"] = st.sidebar.text_input(label="Enter the key")
 llm = OpenAI()
 def response_generator(chain, prompt):
     for word in chain.stream({"question": prompt}):
