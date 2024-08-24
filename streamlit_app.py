@@ -2,26 +2,10 @@ import streamlit as st
 import time
 import os
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_huggingface.llms import HuggingFacePipeline
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import pipeline
+from langchain_ollama.llms import OllamaLLM
 
-model = AutoModelForCausalLM.from_pretrained("bigscience/bloom-7b1")
-tokenizer = AutoTokenizer.from_pretrained("bigscience/bloom-7b1")
-# text_generation_pipeline = pipeline(
-#     model=model,
-#     tokenizer=tokenizer,
-#     task="text-generation",
-#     temperature=0.0,
-#     repetition_penalty=1.1,
-#     return_full_text=True,
-#     max_new_tokens=1000,
-# )
 
-# llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
-
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=200)
-llm = HuggingFacePipeline(pipeline=pipe)
+llm = OllamaLLM(model="minstral:7b")
 
 def response_generator(chain, prompt):
     for word in chain.stream(prompt):
@@ -62,7 +46,7 @@ if selected_type == "Personal Trainer":
         Please provide detailed insights, including any recommended exercises, nutrition tips, and motivational strategies that could be useful.
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_person_trainer = prompt | llm.bind(skip_prompt=True)
+    chain_person_trainer = prompt | llm
     chat_strat(chain_person_trainer)
 
 elif selected_type == "Psychologist":
@@ -72,7 +56,7 @@ elif selected_type == "Psychologist":
         Include relevant psychological concepts, coping strategies, and any advice that may help individuals dealing with this issue.
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_psychologist = prompt | llm.bind(skip_prompt=True)
+    chain_psychologist = prompt | llm
 
     chat_strat(chain_psychologist)
 
