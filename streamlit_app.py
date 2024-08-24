@@ -6,13 +6,13 @@ from langchain_huggingface.llms import HuggingFacePipeline
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import pipeline
 
-model = AutoModelForCausalLM.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
-tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-4k-instruct")
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
 text_generation_pipeline = pipeline(
     model=model,
     tokenizer=tokenizer,
     task="text-generation",
-    temperature=0.2,
+    temperature=0.0,
     repetition_penalty=1.1,
     return_full_text=True,
     max_new_tokens=1000,
