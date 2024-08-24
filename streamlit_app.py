@@ -3,19 +3,11 @@ import time
 import os
 from langchain_huggingface import ChatHuggingFace
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_huggingface.llms import HuggingFacePipeline
-from langchain_community.llms import HuggingFaceHub
+from langchain_community.llms import HuggingFaceEndpoint
 
-llm = HuggingFaceHub(
-    repo_id="HuggingFaceH4/zephyr-7b-beta",
-    task="text-generation",
-    model_kwargs={
-        "max_new_tokens": 512,
-        "top_k": 30,
-        "temperature": 0.1,
-        "repetition_penalty": 1.03,
-    },
-)
+
+llm = HuggingFaceEndpoint(repo_id="HuggingFaceH4/zephyr-7b-beta")
+
 
 
 
