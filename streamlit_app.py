@@ -9,8 +9,6 @@ from langchain_community.llms import HuggingFaceEndpoint
 llm = HuggingFaceEndpoint(repo_id="HuggingFaceH4/zephyr-7b-beta")
 
 
-
-
 def response_generator(chain, prompt):
     for word in chain.stream({"question": prompt}):
         yield word + ""
@@ -33,10 +31,9 @@ def chat_strat(chain):
             st.markdown(prompt)
         # Add user message to chat history
         with st.chat_message("assistant"):
+            st.write(prompt)
             response = chain.invoke({"question":  prompt})
             st.markdown(response)
-
-            
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": response})
 
