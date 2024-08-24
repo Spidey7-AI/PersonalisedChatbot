@@ -20,7 +20,7 @@ tokenizer = AutoTokenizer.from_pretrained("gpt2")
 
 # llm = HuggingFacePipeline(pipeline=text_generation_pipeline)
 
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=500)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=200)
 llm = HuggingFacePipeline(pipeline=pipe)
 
 def response_generator(chain, prompt):
@@ -45,8 +45,8 @@ def chat_strat(chain):
             st.markdown(prompt)
         # Add user message to chat history
         with st.chat_message("assistant"):
-            # response = chain.invoke({"question":  prompt})
-            response = st.write_stream(response_generator(chain=chain, prompt=prompt))
+            response = chain.invoke({"question":  prompt})
+            #response = st.write_stream(response_generator(chain=chain, prompt=prompt))
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": response})
 
