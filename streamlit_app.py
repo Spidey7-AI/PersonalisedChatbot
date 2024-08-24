@@ -4,11 +4,17 @@ import os
 from langchain_huggingface import ChatHuggingFace
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_huggingface.llms import HuggingFacePipeline
+from langchain_community.llms import HuggingFaceHub
 
-llm = HuggingFacePipeline.from_model_id(
-    model_id="HuggingFaceH4/zephyr-7b-beta",
+llm = HuggingFaceHub(
+    repo_id="HuggingFaceH4/zephyr-7b-beta",
     task="text-generation",
-    pipeline_kwargs={"max_new_tokens": 200},
+    model_kwargs={
+        "max_new_tokens": 512,
+        "top_k": 30,
+        "temperature": 0.1,
+        "repetition_penalty": 1.03,
+    },
 )
 
 

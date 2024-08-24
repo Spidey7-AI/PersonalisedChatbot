@@ -3,3 +3,10 @@ langchain-ollama
 langchain-openai
 langchain-huggingface
 transformers
+text-generation 
+transformers 
+google-search-results 
+numexpr 
+langchainhub 
+sentencepiece 
+jinja2
