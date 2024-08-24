@@ -10,3 +10,4 @@ numexpr
 langchainhub 
 sentencepiece 
 jinja2
+langchain-community
