@@ -3,7 +3,6 @@ import time
 import os
 from langchain_huggingface import ChatHuggingFace
 from langchain_core.prompts import ChatPromptTemplate
-
 from langchain_huggingface.llms import HuggingFacePipeline
 
 llm = HuggingFacePipeline.from_model_id(
