@@ -1,9 +1,13 @@
 import streamlit as st
 import time
-
+import os 
+from dotenv import load_dotenv
+from langchain_openai import OpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_ollama.llms import OllamaLLM
-
+# Load environment variables from the .env file
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+llm = OpenAI()
 def response_generator(chain, prompt):
     for word in chain.stream({"question": prompt}):
         yield word + ""
@@ -35,7 +39,6 @@ def chat_strat(chain):
 
 
 
-model = OllamaLLM(model="mistral:7b")
 
 
 selected_type = add_selectbox = st.sidebar.selectbox(
@@ -50,7 +53,7 @@ if selected_type == "Personal Trainer":
         Please provide detailed insights, including any recommended exercises, nutrition tips, and motivational strategies that could be useful
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_person_trainer = prompt | model
+    chain_person_trainer = prompt | llm
     chat_strat(chain_person_trainer)
 elif  selected_type=="Pyschologist":
     st.title("Welcome To Physcologist!")
@@ -59,7 +62,7 @@ elif  selected_type=="Pyschologist":
         Include relevant psychological concepts, coping strategies, and any advice that may help individuals dealing with this issue
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_physco = prompt | model
+    chain_physco = prompt | llm
     chat_strat(chain_physco)
 
 
