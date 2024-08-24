@@ -6,8 +6,8 @@ from langchain_huggingface.llms import HuggingFacePipeline
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import pipeline
 
-model = AutoModelForCausalLM.from_pretrained("mistralai/Mistral-7B")
-tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B")
+model = AutoModelForCausalLM.from_pretrained("dnhkng/RYS-XLarge")
+tokenizer = AutoTokenizer.from_pretrained("dnhkng/RYS-XLarge")
 text_generation_pipeline = pipeline(
     model=model,
     tokenizer=tokenizer,
