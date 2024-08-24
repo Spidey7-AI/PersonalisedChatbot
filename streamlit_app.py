@@ -45,8 +45,8 @@ def chat_strat(chain):
             st.markdown(prompt)
         # Add user message to chat history
         with st.chat_message("assistant"):
-            response = chain.invoke({"question":  prompt})
-            st.markdown(response)
+            # response = chain.invoke({"question":  prompt})
+            response = st.write_stream(response_generator())
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": response})
 
@@ -62,7 +62,7 @@ if selected_type == "Personal Trainer":
         Please provide detailed insights, including any recommended exercises, nutrition tips, and motivational strategies that could be useful.
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_person_trainer = prompt | llm
+    chain_person_trainer = prompt | llm.bind(skip_prompt=True)
     chat_strat(chain_person_trainer)
 
 elif selected_type == "Psychologist":
@@ -72,7 +72,7 @@ elif selected_type == "Psychologist":
         Include relevant psychological concepts, coping strategies, and any advice that may help individuals dealing with this issue.
     """
     prompt = ChatPromptTemplate.from_template(template)
-    chain_psychologist = prompt | llm
+    chain_psychologist = prompt | llm.bind(skip_prompt=True)
 
     chat_strat(chain_psychologist)
 
