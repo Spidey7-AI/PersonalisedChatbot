@@ -24,7 +24,7 @@ pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tok
 llm = HuggingFacePipeline(pipeline=pipe)
 
 def response_generator(chain, prompt):
-    for word in chain.stream({"question": prompt}):
+    for word in chain.stream(prompt):
         yield word + ""
         time.sleep(0.05)
 
